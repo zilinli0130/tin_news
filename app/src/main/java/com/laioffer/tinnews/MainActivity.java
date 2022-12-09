@@ -39,26 +39,26 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController);
 
         // Call the news API
-        NewsApi api = RetrofitClient.newInstance().create(NewsApi.class);
+//        NewsApi api = RetrofitClient.newInstance().create(NewsApi.class);
 
         // It is async call by other thread (not main thread)
-        Call<NewsResponse> call = api.getTopHeadlines("us");
-        call.enqueue(new Callback<NewsResponse>() {
-            @Override
-            public void onResponse(Call<NewsResponse> call, Response<NewsResponse> response) {
-                if (response.isSuccessful()) {
-                    Log.d("getTopHeadlines", response.body().toString());
-                } else {
-                    Log.d("getTopHeadlines", response.toString());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<NewsResponse> call, Throwable t) {
-                Log.d("getTopHeadlines", t.toString());
-
-            }
-        });
+//        Call<NewsResponse> call = api.getTopHeadlines("us");
+//        call.enqueue(new Callback<NewsResponse>() {
+//            @Override
+//            public void onResponse(Call<NewsResponse> call, Response<NewsResponse> response) {
+//                if (response.isSuccessful()) {
+//                    Log.d("getTopHeadlines", response.body().toString());
+//                } else {
+//                    Log.d("getTopHeadlines", response.toString());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<NewsResponse> call, Throwable t) {
+//                Log.d("getTopHeadlines", t.toString());
+//
+//            }
+//        });
 
     }
 
