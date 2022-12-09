@@ -1,7 +1,16 @@
+//**********************************************************************************************************************
+// * Documentation
+// * Author: zilin.li
+// * Date: 12/22
+// * Definition: Implementation of RetrofitClient class.
+// * Node: Class to create Retrofit service client builder
+//**********************************************************************************************************************
 package com.laioffer.tinnews.network;
+//**********************************************************************************************************************
+// * Includes
+//**********************************************************************************************************************
 
-import java.io.IOException;
-
+// Network includes
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -9,11 +18,17 @@ import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+// System includes
+import java.io.IOException;
+
+//**********************************************************************************************************************
+// * Class definition
+//**********************************************************************************************************************
 public class RetrofitClient {
 
-    private static final String API_KEY = "dc06108a30b04205b7a6ebffdf526fcf";
-    private static final String BASE_URL = "https://newsapi.org/v2/";
-
+//**********************************************************************************************************************
+// * Public methods
+//**********************************************************************************************************************
     // Retrofit-> endpoint -> okHttp (do request) -> JSON -> GSON parse -> Java object
     // Static method for retrieving Retrofit builder
     public static Retrofit newInstance() {
@@ -39,6 +54,13 @@ public class RetrofitClient {
                     .build();
             return chain.proceed(request);
         }
+
     }
+
+//**********************************************************************************************************************
+// * Private attributes
+//**********************************************************************************************************************
+    private static final String API_KEY = "dc06108a30b04205b7a6ebffdf526fcf";
+    private static final String BASE_URL = "https://newsapi.org/v2/";
 }
 

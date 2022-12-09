@@ -1,65 +1,53 @@
+//**********************************************************************************************************************
+// * Documentation
+// * Author: zilin.li
+// * Date: 12/22
+// * Definition: Implementation of MainActivity class.
+// * Note: main class for main activity
+//**********************************************************************************************************************
 package com.laioffer.tinnews;
 
+//**********************************************************************************************************************
+// * Includes
+//**********************************************************************************************************************
+
+// Framework includes
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
-
 import android.os.Bundle;
-import android.util.Log;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.laioffer.tinnews.model.NewsResponse;
-import com.laioffer.tinnews.network.NewsApi;
-import com.laioffer.tinnews.network.RetrofitClient;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
+//**********************************************************************************************************************
+// * Class definition
+//**********************************************************************************************************************
 public class MainActivity extends AppCompatActivity {
 
-    private NavController navController;
-
+//**********************************************************************************************************************
+// * Public methods
+//**********************************************************************************************************************
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Bottom navigation view
         BottomNavigationView navView = findViewById(R.id.nav_view);
+
+        // Fragment view
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment);
 
+        // Nav controller to manage fragments
         navController = navHostFragment.getNavController();
 
-        // click on tab on BottomNavView can navigate
+        // Enable navigation through clicking on tab on BottomNavView
         NavigationUI.setupWithNavController(navView, navController);
 
-        // can display label on action bar
+        // Display label on action bar
         NavigationUI.setupActionBarWithNavController(this, navController);
-
-        // Call the news API
-//        NewsApi api = RetrofitClient.newInstance().create(NewsApi.class);
-
-        // It is async call by other thread (not main thread)
-//        Call<NewsResponse> call = api.getTopHeadlines("us");
-//        call.enqueue(new Callback<NewsResponse>() {
-//            @Override
-//            public void onResponse(Call<NewsResponse> call, Response<NewsResponse> response) {
-//                if (response.isSuccessful()) {
-//                    Log.d("getTopHeadlines", response.body().toString());
-//                } else {
-//                    Log.d("getTopHeadlines", response.toString());
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<NewsResponse> call, Throwable t) {
-//                Log.d("getTopHeadlines", t.toString());
-//
-//            }
-//        });
-
     }
 
     @Override
@@ -67,4 +55,9 @@ public class MainActivity extends AppCompatActivity {
         // can click back
         return navController.navigateUp();
     }
+
+//**********************************************************************************************************************
+// * Private attributes
+//**********************************************************************************************************************
+    private NavController navController;
 }

@@ -1,27 +1,49 @@
+//**********************************************************************************************************************
+// * Documentation
+// * Author: zilin.li
+// * Date: 12/22
+// * Definition: Implementation of NewsRepository class.
+// * Node: Class for creating news repository which uses Retrofit service client to fetch news data through news API
+//**********************************************************************************************************************
 package com.laioffer.tinnews.repository;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+//**********************************************************************************************************************
+// * Includes
+//**********************************************************************************************************************
 
+// Project includes
 import com.laioffer.tinnews.model.NewsResponse;
 import com.laioffer.tinnews.network.NewsApi;
 import com.laioffer.tinnews.network.RetrofitClient;
 
+// Framework includes
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
+// Network includes
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+//**********************************************************************************************************************
+// * Class definition
+//**********************************************************************************************************************
+
 public class NewsRepository {
 
-    // Singleton instance of NewsApi
-    private final NewsApi newsApi;
-
+//**********************************************************************************************************************
+// * Class constructor
+//**********************************************************************************************************************
     public NewsRepository() {
         newsApi = RetrofitClient.newInstance().create(NewsApi.class);
     }
 
-    // Retrofit web service
-    // UI observes the LiveData<T>
+//**********************************************************************************************************************
+// * Public method
+//**********************************************************************************************************************
+
+    // Implement interface methods
+    // View model provides LiveData<T> through calling the APIs here to view, view observes LiveData<T>
     public LiveData<NewsResponse> getTopHeadlines(String country) {
         MutableLiveData<NewsResponse> topHeadlinesLiveData = new MutableLiveData<>();
         newsApi.getTopHeadlines(country)
@@ -43,7 +65,6 @@ public class NewsRepository {
         return topHeadlinesLiveData;
     }
 
-    // Retrofit web service
     public LiveData<NewsResponse> searchNews(String query) {
         MutableLiveData<NewsResponse> everyThingLiveData = new MutableLiveData<>();
         newsApi.getEverything(query, 40)
@@ -66,6 +87,11 @@ public class NewsRepository {
         return everyThingLiveData;
     }
 
+//**********************************************************************************************************************
+// * Private attributes
+//**********************************************************************************************************************
+    // Singleton instance of Retrofit web service client
+    private final NewsApi newsApi;
 
 }
 

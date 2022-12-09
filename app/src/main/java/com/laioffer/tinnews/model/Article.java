@@ -1,16 +1,27 @@
+//**********************************************************************************************************************
+// * Documentation
+// * Author: zilin.li
+// * Date: 12/22
+// * Definition: Implementation of Article class.
+// * Node: data class for storing article information
+//**********************************************************************************************************************
 package com.laioffer.tinnews.model;
 
+//**********************************************************************************************************************
+// * Includes
+//**********************************************************************************************************************
+
+// System includes
 import java.util.Objects;
 
+//**********************************************************************************************************************
+// * Class definition
+//**********************************************************************************************************************
 public class Article {
-    public String author;
-    public String content;
-    public String description;
-    public String publishedAt;
-    public String title;
-    public String url;
-    public String urlToImage;
 
+//**********************************************************************************************************************
+// * Public methods
+//**********************************************************************************************************************
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -36,5 +47,16 @@ public class Article {
                 ", urlToImage='" + urlToImage + '\'' +
                 '}';
     }
+
+//**********************************************************************************************************************
+// * Private attributes
+//**********************************************************************************************************************
+    public String author;
+    public String content;
+    public String description;
+    public String publishedAt;
+    public String title;
+    public String url;
+    public String urlToImage;
 }
 

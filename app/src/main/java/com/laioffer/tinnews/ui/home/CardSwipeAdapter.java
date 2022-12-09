@@ -1,40 +1,62 @@
+//**********************************************************************************************************************
+// * Documentation
+// * Author: zilin.li
+// * Date: 12/22
+// * Definition: Implementation of CardSwipeAdapter class.
+// * Node: adapter class for binding data to view holder
+//**********************************************************************************************************************
 package com.laioffer.tinnews.ui.home;
 
+//**********************************************************************************************************************
+// * Includes
+//**********************************************************************************************************************
+
+// Framework includes
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+// Project includes
 import com.laioffer.tinnews.R;
 import com.laioffer.tinnews.databinding.SwipeNewsCardBinding;
 import com.laioffer.tinnews.model.Article;
 import com.squareup.picasso.Picasso;
 
+// System includes
 import java.util.ArrayList;
 import java.util.List;
 
+//**********************************************************************************************************************
+// * Class definition
+//**********************************************************************************************************************
 public class CardSwipeAdapter extends RecyclerView.Adapter<CardSwipeAdapter.CardSwipeViewHolder>{
-    // 1. Supporting data:
-    private List<Article> articles = new ArrayList<>();
 
+//**********************************************************************************************************************
+// * Public methods
+//**********************************************************************************************************************
+
+    // Set article data
     public void setArticles(List<Article> newsList) {
         articles.clear();
         articles.addAll(newsList);
         notifyDataSetChanged();
     }
 
-    // 2. Adapter overrides:
+    // Create view holder
     @NonNull
     @Override
     public CardSwipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        // Inflate the layout for this item and create Java view item object
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.swipe_news_card, parent, false);
         return new CardSwipeViewHolder(view);
     }
 
+    // Bind article data to view holder
     @Override
     public void onBindViewHolder(@NonNull CardSwipeViewHolder holder, int position) {
         Article article = articles.get(position);
@@ -50,7 +72,11 @@ public class CardSwipeAdapter extends RecyclerView.Adapter<CardSwipeAdapter.Card
         return articles.size();
     }
 
-    // 3. CardSwipeViewHolder:
+//**********************************************************************************************************************
+// * Static inner class definition
+//**********************************************************************************************************************
+
+    // Create view holder through item view fields
     public static class CardSwipeViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
@@ -66,4 +92,10 @@ public class CardSwipeAdapter extends RecyclerView.Adapter<CardSwipeAdapter.Card
             descriptionTextView = binding.swipeCardDescription;
         }
     }
+
+//**********************************************************************************************************************
+// * Private attributes
+//**********************************************************************************************************************
+    private List<Article> articles = new ArrayList<>();
+
 }

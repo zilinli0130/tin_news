@@ -1,40 +1,54 @@
+//**********************************************************************************************************************
+// * Documentation
+// * Author: zilin.li
+// * Date: 12/22
+// * Definition: Implementation of SearchFragment class.
+// * Note: fragment class for search tab
+//**********************************************************************************************************************
 package com.laioffer.tinnews.ui.search;
 
-import android.os.Bundle;
+//**********************************************************************************************************************
+// * Includes
+//**********************************************************************************************************************
 
+// Project includes
+import com.laioffer.tinnews.databinding.FragmentSearchBinding;
+import com.laioffer.tinnews.repository.NewsRepository;
+import com.laioffer.tinnews.repository.NewsViewModelFactory;
+
+// Framework includes
+import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.laioffer.tinnews.R;
-import com.laioffer.tinnews.databinding.FragmentSearchBinding;
-import com.laioffer.tinnews.repository.NewsRepository;
-import com.laioffer.tinnews.repository.NewsViewModelFactory;
 
+//**********************************************************************************************************************
+// * Class definition
+//**********************************************************************************************************************
 public class SearchFragment extends Fragment {
 
-    private SearchViewModel viewModel;
-    private FragmentSearchBinding binding;
+
+//**********************************************************************************************************************
+// * Public methods
+//**********************************************************************************************************************
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
-        // Create the Java view object from xml (view binding)
+        // Inflate the layout for this fragment and create the Java view object from xml (view binding)
         binding = FragmentSearchBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -74,13 +88,20 @@ public class SearchFragment extends Fragment {
         NewsRepository repository = new NewsRepository();
         viewModel = new ViewModelProvider(this, new NewsViewModelFactory(repository)).get(SearchViewModel.class);
         viewModel.searchNews().observe( getViewLifecycleOwner(),
-        newsResponse -> {
-            if (newsResponse != null) {
-                Log.d("SearchFragment", newsResponse.toString());
-                newsAdapter.setArticles(newsResponse.articles);
-            }
-        });
+                // viewModel is observed by view, observer observes the LiveData<T>,
+                // observer will execute this function as long as LiveData<T> updates
+                newsResponse -> {
+                    if (newsResponse != null) {
+                        Log.d("SearchFragment", newsResponse.toString());
+                        newsAdapter.setArticles(newsResponse.articles);
+                    }
+                });
 
     }
 
+//**********************************************************************************************************************
+// * Private attributes
+//**********************************************************************************************************************
+    private SearchViewModel viewModel;
+    private FragmentSearchBinding binding;
 }
