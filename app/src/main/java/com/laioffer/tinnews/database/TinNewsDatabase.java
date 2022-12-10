@@ -2,59 +2,52 @@
 // * Documentation
 // * Author: zilin.li
 // * Date: 12/22
-// * Definition: Implementation of NewsRepository class.
-// * Node: class to implement factory builder design pattern for creating view model
+// * Definition: Implementation of TinNewsDatabase class.
+// * Note: abstract class used by Room to build a database
 //**********************************************************************************************************************
-package com.laioffer.tinnews.repository;
 
+package com.laioffer.tinnews.database;
 //**********************************************************************************************************************
 // * Includes
 //**********************************************************************************************************************
 
 // Project includes
-import com.laioffer.tinnews.ui.home.HomeViewModel;
-import com.laioffer.tinnews.ui.save.SaveViewModel;
-import com.laioffer.tinnews.ui.search.SearchViewModel;
+import com.laioffer.tinnews.model.Article;
 
 // Framework includes
-import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.room.Database;
+import androidx.room.RoomDatabase;
+
+// Library includes
+
+// System includes
 
 
 //**********************************************************************************************************************
 // * Class definition
 //**********************************************************************************************************************
-public class NewsViewModelFactory implements ViewModelProvider.Factory {
+@Database(entities = {Article.class}, version = 1, exportSchema = false)
+public abstract class TinNewsDatabase extends RoomDatabase {
 
 //**********************************************************************************************************************
 // * Class constructor
 //**********************************************************************************************************************
-    public NewsViewModelFactory(NewsRepository repository) {
-        this.repository = repository;
-    }
+//**********************************************************************************************************************
+// * Public attributes
+//**********************************************************************************************************************
+public abstract ArticleDao articleDao();
 
 //**********************************************************************************************************************
-// * Public methods
+// * Protected methods
 //**********************************************************************************************************************
-    @NonNull
-    @Override
-    public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if (modelClass.isAssignableFrom(HomeViewModel.class)) {
-            return (T) new HomeViewModel(repository);
-        } else if (modelClass.isAssignableFrom(SearchViewModel.class)) {
-            return (T) new SearchViewModel(repository);
-        } else if (modelClass.isAssignableFrom(SaveViewModel.class)) {
-            return (T) new SaveViewModel(repository);
-        } else {
-            throw new IllegalStateException("Unknown ViewModel");
-        }
-    }
+
+//**********************************************************************************************************************
+// * Private methods
+//**********************************************************************************************************************
 
 //**********************************************************************************************************************
 // * Private attributes
 //**********************************************************************************************************************
-    private final NewsRepository repository;
+
+
 }
-
-

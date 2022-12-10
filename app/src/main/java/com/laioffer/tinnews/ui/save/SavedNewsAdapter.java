@@ -2,14 +2,19 @@
 // * Documentation
 // * Author: zilin.li
 // * Date: 12/22
-// * Definition: Implementation of CardSwipeAdapter class.
-// * Node: adapter class for binding data to view holder
+// * Definition: Implementation of SavedNewsAdapter class.
+// * Note: adapter class for binding data to view holder
 //**********************************************************************************************************************
-package com.laioffer.tinnews.ui.home;
+package com.laioffer.tinnews.ui.save;
 
 //**********************************************************************************************************************
 // * Includes
 //**********************************************************************************************************************
+
+// Project includes
+import com.laioffer.tinnews.R;
+import com.laioffer.tinnews.databinding.SavedNewsItemBinding;
+import com.laioffer.tinnews.model.Article;
 
 // Framework includes
 import android.view.LayoutInflater;
@@ -20,12 +25,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-// Project includes
-import com.laioffer.tinnews.R;
-import com.laioffer.tinnews.databinding.SwipeNewsCardBinding;
-import com.laioffer.tinnews.model.Article;
-import com.squareup.picasso.Picasso;
-
 // System includes
 import java.util.ArrayList;
 import java.util.List;
@@ -33,43 +32,33 @@ import java.util.List;
 //**********************************************************************************************************************
 // * Class definition
 //**********************************************************************************************************************
-public class CardSwipeAdapter extends RecyclerView.Adapter<CardSwipeAdapter.CardSwipeViewHolder>{
+public class SavedNewsAdapter extends RecyclerView.Adapter<SavedNewsAdapter.SavedNewsViewHolder> {
 
 //**********************************************************************************************************************
 // * Public methods
 //**********************************************************************************************************************
-
-    // Set article data
     public void setArticles(List<Article> newsList) {
         articles.clear();
         articles.addAll(newsList);
         notifyDataSetChanged();
     }
 
-    // Get article data
-    public List<Article> getArticles() {
-        return articles;
-    }
-
-    // Create view holder
     @NonNull
     @Override
-    public CardSwipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        // Inflate the layout for this item and create Java view item object
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.swipe_news_card, parent, false);
-        return new CardSwipeViewHolder(view);
+    public SavedNewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.saved_news_item, parent, false);
+        return new SavedNewsViewHolder(view);
     }
 
-    // Bind article data to view holder
     @Override
-    public void onBindViewHolder(@NonNull CardSwipeViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SavedNewsViewHolder holder, int position) {
         Article article = articles.get(position);
-        holder.titleTextView.setText(article.title);
+        holder.authorTextView.setText(article.author);
         holder.descriptionTextView.setText(article.description);
-        if (article.urlToImage != null) {
-            Picasso.get().load(article.urlToImage).into(holder.imageView);
-        }
+
+        // Set listener to icons
+        holder.favoriteIcon.setOnClickListener(v -> itemCallback.onRemoveFavorite(article));
+        holder.itemView.setOnClickListener(v -> itemCallback.onOpenDetails(article));
     }
 
     @Override
@@ -77,30 +66,39 @@ public class CardSwipeAdapter extends RecyclerView.Adapter<CardSwipeAdapter.Card
         return articles.size();
     }
 
-//**********************************************************************************************************************
-// * Static inner class definition
-//**********************************************************************************************************************
+    public void setItemCallback(ItemCallback itemCallback) {
+        this.itemCallback = itemCallback;
+    }
 
-    // Create view holder through item view fields
-    public static class CardSwipeViewHolder extends RecyclerView.ViewHolder {
+//**********************************************************************************************************************
+// * Static inner class
+//**********************************************************************************************************************
+    public static class SavedNewsViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView imageView;
-        TextView titleTextView;
+        TextView authorTextView;
         TextView descriptionTextView;
+        ImageView favoriteIcon;
 
-        public CardSwipeViewHolder(@NonNull View itemView) {
+        public SavedNewsViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            SwipeNewsCardBinding binding = SwipeNewsCardBinding.bind(itemView);
-            imageView = binding.swipeCardImageView;
-            titleTextView = binding.swipeCardTitle;
-            descriptionTextView = binding.swipeCardDescription;
+            SavedNewsItemBinding binding = SavedNewsItemBinding.bind(itemView);
+            authorTextView = binding.savedItemAuthorContent;
+            descriptionTextView = binding.savedItemDescriptionContent;
+            favoriteIcon = binding.savedItemFavoriteImageView;
         }
+    }
+
+//**********************************************************************************************************************
+// * Inner interface
+//**********************************************************************************************************************
+    public interface ItemCallback {
+        void onOpenDetails(Article article);
+        void onRemoveFavorite(Article article);
     }
 
 //**********************************************************************************************************************
 // * Private attributes
 //**********************************************************************************************************************
+    private ItemCallback itemCallback;
     private List<Article> articles = new ArrayList<>();
-
 }

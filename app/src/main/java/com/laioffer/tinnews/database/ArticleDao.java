@@ -2,45 +2,44 @@
 // * Documentation
 // * Author: zilin.li
 // * Date: 12/22
-// * Definition: Implementation of TinNewsApplication class.
-// * Note: main class for application
+// * Definition: Implementation of ArticleDao interface.
+// * Note: interface for accessing database
 //**********************************************************************************************************************
-package com.laioffer.tinnews;
+package com.laioffer.tinnews.database;
 
 //**********************************************************************************************************************
 // * Includes
 //**********************************************************************************************************************
 
 // Project includes
-import com.laioffer.tinnews.database.TinNewsDatabase;
+import com.laioffer.tinnews.model.Article;
 
 // Framework includes
-import android.app.Application;
-import androidx.room.Room;
+import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.Query;
 
+// System includes
+import java.util.List;
 
 //**********************************************************************************************************************
-// * Class definition
+// * Interface definition
 //**********************************************************************************************************************
-public class TinNewsApplication extends Application {
+@Dao
+public interface ArticleDao {
 
 //**********************************************************************************************************************
 // * Public methods
 //**********************************************************************************************************************
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        database = Room.databaseBuilder(this, TinNewsDatabase.class, "tinnews_db").build();
-    }
+    @Insert
+    void saveArticle(Article article);
 
-    public static TinNewsDatabase getDatabase() {
-        return database;
-   }
+    // Async task by other thread by wrapping data inside LiveData<T>
+    @Query("SELECT * FROM article")
+    LiveData<List<Article>> getAllArticles();
 
-//**********************************************************************************************************************
-// * Private attributes
-//**********************************************************************************************************************
-    private static TinNewsDatabase database;
-
+    @Delete
+    void deleteArticle(Article article);
 }
-

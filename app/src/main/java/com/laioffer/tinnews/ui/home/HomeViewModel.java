@@ -12,6 +12,7 @@ package com.laioffer.tinnews.ui.home;
 //**********************************************************************************************************************
 
 // Project includes
+import com.laioffer.tinnews.model.Article;
 import com.laioffer.tinnews.model.NewsResponse;
 import com.laioffer.tinnews.repository.NewsRepository;
 
@@ -39,11 +40,17 @@ public class HomeViewModel extends ViewModel {
         countryInput.setValue(country);
     }
 
+    // LiveData<T> can be observed by anyone, but we make it only for UI view
     public LiveData<NewsResponse> getTopHeadlines() {
 
         // When countryInput changes, repository::getTopHeadlines is called
         return Transformations.switchMap(countryInput, repository::getTopHeadlines);
     }
+
+    public void setFavoriteArticleInput(Article article) {
+        repository.favoriteArticle(article);
+    }
+
 
 //**********************************************************************************************************************
 // * Private attributes

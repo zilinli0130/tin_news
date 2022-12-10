@@ -23,6 +23,8 @@ import retrofit2.http.Query;
 // * Interface definition
 //**********************************************************************************************************************
 public interface NewsApi {
+
+    // (Call<T> is from retrofit) -> async call task by other thread
     @GET("top-headlines")
     Call<NewsResponse> getTopHeadlines(@Query("country") String country);
 

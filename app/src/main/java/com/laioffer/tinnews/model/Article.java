@@ -11,12 +11,18 @@ package com.laioffer.tinnews.model;
 // * Includes
 //**********************************************************************************************************************
 
+// Framework includes
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 // System includes
 import java.util.Objects;
 
 //**********************************************************************************************************************
 // * Class definition
 //**********************************************************************************************************************
+@Entity
 public class Article {
 
 //**********************************************************************************************************************
@@ -51,12 +57,15 @@ public class Article {
 //**********************************************************************************************************************
 // * Private attributes
 //**********************************************************************************************************************
+
+    @NonNull
+    @PrimaryKey
+    public String url;
     public String author;
     public String content;
     public String description;
     public String publishedAt;
     public String title;
-    public String url;
     public String urlToImage;
 }
 
