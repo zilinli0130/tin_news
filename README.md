@@ -7,9 +7,15 @@
 
 ### *Developer Environment*
 
+The Android development for this Java project is based in Android Studio. In order to visualize the front end GUI and test backend logics, this project uses the emulator inside Android Studio to display the app outlook. The virtual device configuration for this emulator is baesed on `Pixel` with `Tiramisu` API33 as the x86 image. 
+
 ---
 
 ### *Frontend Software Architecture*
+
+The main activity xml layout consists of frgament container view (`FragmentContainerView`) and bottom navigation view (`BottomNavigationView`) as the overall front-end GUI architecture. The `FragmentContainerView` contains a navigation graph which connects all the app fragments (home, search, save, details). The navigation graph is managed by navigation controller to switch with different fragments. The `NavigationUI` setups the navigation controller (`NavController`) and bottom navigation view (`BottomNavigationView`) together so that the correspondin fragment will be displayed on screen when user clicks a specific tab inside bottom navigation view. Each tab id and associated fragment id inside navigation graph should be matched up so that navigation controller (`NavController`) can find the fragment and display it on the 
+frgament container view (`FragmentContainerView`).
+
 ---
 
 ### *Backend Software Architecture*
@@ -51,7 +57,7 @@ there is also an asynced task to delete this article through Room DB query. Sinc
 Similar to Hibernate in Spring MVC framework, `Room` is an annotaion based ORM solution for SQLite data query on Android platform. The `Room` DB creates the `TinnewsDatabase` which uses `ArticleDao` data access object to do SQLite data query. The entity of data is exposed as a Java object on developer side, which makes the 
 data query more convenient so that developer does not need to use SQL language to access database. The schema for an article entity shows below:
 
-
+![Database schema](images/schema.PNG)
 
 ---
  
