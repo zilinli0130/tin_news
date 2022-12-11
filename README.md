@@ -1,4 +1,4 @@
-# tinnews_project
+# tinnews
 
 ### *Introduction*
 
