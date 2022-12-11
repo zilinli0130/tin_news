@@ -13,6 +13,10 @@ The Android development for this Java project is based in Android Studio. In ord
 
 ### *Frontend Software Architecture*
 
+![Database schema](images/front_end_architecture.PNG)
+
+Figure 1. Frontend software architecture design process flow (click the diagram to view in a larger view)
+
 The main activity xml layout consists of frgament container view (`FragmentContainerView`) and bottom navigation view (`BottomNavigationView`) as the overall front-end GUI architecture. The `FragmentContainerView` contains a navigation graph which connects all the app fragments (home, search, save, details). The navigation graph is managed by navigation controller to switch with different fragments. The `NavigationUI` setups the navigation controller (`NavController`) and bottom navigation view (`BottomNavigationView`) together so that the correspondin fragment will be displayed on screen when user clicks a specific tab inside bottom navigation view. Each tab id and associated fragment id inside navigation graph should be matched up so that navigation controller (`NavController`) can find the fragment and display it on the 
 frgament container view (`FragmentContainerView`).
 
@@ -58,6 +62,8 @@ Similar to Hibernate in Spring MVC framework, `Room` is an annotaion based ORM s
 data query more convenient so that developer does not need to use SQL language to access database. The schema for an article entity shows below:
 
 ![Database schema](images/schema.PNG)
+
+Figure 3. RDBMS schema (article) 
 
 ---
  
