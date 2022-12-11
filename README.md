@@ -13,7 +13,7 @@ The Android development for this Java project is based in Android Studio. In ord
 
 ### *Frontend Software Architecture*
 
-![Database schema](images/front_end_architecture.PNG)
+![Database schema](images/front_end_architecture_view.PNG)
 
 Figure 1. Frontend software architecture design process flow (click the diagram to view in a larger view)
 
