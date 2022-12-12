@@ -55,6 +55,11 @@ The search page displays the data response from user searching request in a recy
 The save page displays all the liked news article from user, the liked news artitlces will be retrieved through Room DB query. If user unlikes an article in this page,
 there is also an asynced task to delete this article through Room DB query. Since the articles are wrapped inside `LiveData<T>`, the `SaveVideModel` observes the update of articles, `SavedNewsAdapter` will sync the data response to its inner data field and call `notifyDataSetChanged()`, which will trigger the `ViewHolder` to re-bind the new data source so that view layer can be updated.  
 
+#### 4. Details Page
+
+The details page shows the details of an article if user clicks an article either in search page or save page. It only contains a scrollview. The `SearchFragment` needs to implement the `ItemCallback` interface inside `SearchNewsAdapter`which containes the callback method for switching to details fragment. The same logic applies 
+to the save page.
+
 ---
 ### *Database*
 
