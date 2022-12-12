@@ -40,7 +40,7 @@ public class SavedNewsAdapter extends RecyclerView.Adapter<SavedNewsAdapter.Save
     public void setArticles(List<Article> newsList) {
         articles.clear();
         articles.addAll(newsList);
-        notifyDataSetChanged();
+        notifyDataSetChanged(); // update data as long as ListData<T> article changes
     }
 
     @NonNull

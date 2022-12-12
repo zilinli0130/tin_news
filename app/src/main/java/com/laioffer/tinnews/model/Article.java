@@ -17,13 +17,14 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 // System includes
+import java.io.Serializable;
 import java.util.Objects;
 
 //**********************************************************************************************************************
 // * Class definition
 //**********************************************************************************************************************
 @Entity
-public class Article {
+public class Article implements Serializable {
 
 //**********************************************************************************************************************
 // * Public methods

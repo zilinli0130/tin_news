@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -59,12 +60,13 @@ public class SaveFragment extends Fragment {
         binding.newsSavedRecyclerView.setAdapter(savedNewsAdapter);
         binding.newsSavedRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        // Set a callback to remove favorite item
+        // Set a callback to remove favorite item and switch current fragment to details fragment
         savedNewsAdapter.setItemCallback(new SavedNewsAdapter.ItemCallback() {
             @Override
             public void onOpenDetails(Article article) {
-                // TODO
-                Log.d("onOpenDetails", article.toString());
+                SaveFragmentDirections.ActionNavigationSaveToNavigationDetails direction =
+                        SaveFragmentDirections.actionNavigationSaveToNavigationDetails(article);
+                NavHostFragment.findNavController(SaveFragment.this).navigate(direction);
             }
 
             @Override
@@ -76,6 +78,8 @@ public class SaveFragment extends Fragment {
         // Setup view model
         NewsRepository repository = new NewsRepository();
         viewModel = new ViewModelProvider(this, new NewsViewModelFactory(repository)).get(SaveViewModel.class);
+
+        // The view model observes LiveData<T> article from DB
         viewModel
                 .getAllSavedArticles()
                 .observe(

@@ -122,7 +122,7 @@ public class HomeFragment extends Fragment implements CardStackListener {
 
         // Get the last article from adapter (maintain the LiveData<T> article)
         Article article = swipeAdapter.getArticles().get(layoutManager.getTopPosition() -1);
-        viewModel.setFavoriteArticleInput(article);
+        viewModel.setFavoriteArticleInput(article, getContext());
     }
 
     @Override

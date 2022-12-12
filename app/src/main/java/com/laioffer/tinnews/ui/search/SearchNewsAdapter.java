@@ -39,8 +39,8 @@ public class SearchNewsAdapter extends RecyclerView.Adapter<SearchNewsAdapter.Se
 
 //**********************************************************************************************************************
 // * Public methods
-//**********************************************************************************************************************
 
+//**********************************************************************************************************************
     // Set the article data
     public void setArticles(List<Article> newsList) {
         articles.clear();
@@ -66,6 +66,7 @@ public class SearchNewsAdapter extends RecyclerView.Adapter<SearchNewsAdapter.Se
         if (article.urlToImage != null) {
             Picasso.get().load(article.urlToImage).resize(200, 200).into(holder.itemImageView);
         }
+        holder.itemView.setOnClickListener(v -> itemCallback.onOpenDetails(article));
     }
 
     @Override
@@ -73,15 +74,17 @@ public class SearchNewsAdapter extends RecyclerView.Adapter<SearchNewsAdapter.Se
         return articles.size();
     }
 
+    public void setItemCallback(ItemCallback itemCallback) {
+        this.itemCallback = itemCallback;
+    }
+
 //**********************************************************************************************************************
 // * Static inner class definition
-//**********************************************************************************************************************
 
+//**********************************************************************************************************************
     // Create view holder through item view fields
     public static class SearchNewsViewHolder extends RecyclerView.ViewHolder {
-
         ImageView itemImageView;
-
         TextView itemTitleTextView;
         public SearchNewsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -89,10 +92,20 @@ public class SearchNewsAdapter extends RecyclerView.Adapter<SearchNewsAdapter.Se
             itemImageView = binding.searchItemImage;
             itemTitleTextView = binding.searchItemTitle;
         }
+
+    }
+//**********************************************************************************************************************
+// * Inner interface definition
+
+//**********************************************************************************************************************
+    public interface ItemCallback {
+        void onOpenDetails(Article article);
+
     }
 
 //**********************************************************************************************************************
 // * Private attributes
 //**********************************************************************************************************************
+    private ItemCallback itemCallback;
     private List<Article> articles = new ArrayList<>();
 }

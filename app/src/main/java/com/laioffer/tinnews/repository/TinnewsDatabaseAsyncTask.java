@@ -2,8 +2,8 @@
 // * Documentation
 // * Author: zilin.li
 // * Date: 12/22
-// * Definition: Implementation of MyAsyncTask class.
-// * Note: Demo for toast implementation
+// * Definition: Implementation of TinnewsDatabaseAsyncTask class.
+// * Note: async task class for processing database I/O request
 //**********************************************************************************************************************
 
 package com.laioffer.tinnews.repository;
@@ -12,12 +12,14 @@ package com.laioffer.tinnews.repository;
 //**********************************************************************************************************************
 
 // Project includes
+import com.laioffer.tinnews.database.TinNewsDatabase;
 import com.laioffer.tinnews.model.Article;
 
 // Framework includes
 import android.os.Handler;
 import android.os.Looper;
-
+import android.util.Log;
+import androidx.lifecycle.MutableLiveData;
 
 // Library includes
 
@@ -27,16 +29,14 @@ import android.os.Looper;
 //**********************************************************************************************************************
 // * Class definition
 //**********************************************************************************************************************
-public abstract class MyAsyncTask<Params, Progress, Result> {
+public abstract class TinnewsDatabaseAsyncTask<Params, Progress, Result> {
 
 //**********************************************************************************************************************
 // * Protect methods
 //**********************************************************************************************************************
-    protected abstract Result doInBackground(Params params);
 
-    protected void onPreExecute() {
+    protected void onPreExecute() {}
 
-    }
     protected void publishProgress(final Progress progress) {
         handler.post(new Runnable() {
             @Override
@@ -46,19 +46,20 @@ public abstract class MyAsyncTask<Params, Progress, Result> {
         });
     }
 
-    protected void onProgressUpdate(Progress progress) {
+    // Background thread
+    protected abstract Result doInBackground(Params params);
 
-    }
+    protected void onProgressUpdate(Progress progress) {}
 
-    protected void onPostExecute(Result result) {
-
-    }
+    // Main thread
+    protected void onPostExecute(Result result) {}
 
 //**********************************************************************************************************************
 // * Public method
 //**********************************************************************************************************************
 
-    public MyAsyncTask<Params, Progress, Result> execute(final Params params) {
+    // Background thread
+    public TinnewsDatabaseAsyncTask<Params, Progress, Result> execute(final Params params) {
         onPreExecute();
         new Thread(new Runnable() {
             @Override
@@ -75,8 +76,10 @@ public abstract class MyAsyncTask<Params, Progress, Result> {
         return this;
     }
 
+    // Background thread
     public static void execute(Runnable runnable) {
-        new MyAsyncTask() {
+        new TinnewsDatabaseAsyncTask() {
+
             @Override
             protected Object doInBackground(Object o) {
                 runnable.run();
@@ -85,21 +88,42 @@ public abstract class MyAsyncTask<Params, Progress, Result> {
         };
     }
 
-    public void main() {
-        new MyFavoriteAsyncTask().execute(new Article());
-        MyAsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        });
+    public void saveFavoriteArticle(TinNewsDatabase database, MutableLiveData<Boolean> liveData, Article article) {
+        SaveFavoriteArticleAsyncTask task = new SaveFavoriteArticleAsyncTask(database, liveData);
+        task.execute(article);
     }
 
-    public static class MyFavoriteAsyncTask extends MyAsyncTask<Article, Void, Boolean> {
+    public void deleteFavoriteArticle(Runnable runnable) {
+        this.execute(runnable);
+    }
 
+    public static class SaveFavoriteArticleAsyncTask extends TinnewsDatabaseAsyncTask<Article, Void, Boolean> {
+
+        private final TinNewsDatabase database;
+        private final MutableLiveData<Boolean> liveData;
+
+        private SaveFavoriteArticleAsyncTask(TinNewsDatabase database, MutableLiveData<Boolean> liveData) {
+            this.database = database;
+            this.liveData = liveData;
+        }
+
+        // Implement the abstract method in TinnewsDatabaseAsyncTask<T1,T2,T3> to save favorite article item
         @Override
         protected Boolean doInBackground(Article article) {
-            return null;
+
+            try {
+                database.articleDao().saveArticle(article);
+                Log.d("SaveFavoriteArticle", "save favorite item for " + article.title);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            liveData.setValue(result);
         }
     }
 //**********************************************************************************************************************

@@ -17,6 +17,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 import android.os.Bundle;
+import android.widget.Toast;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
@@ -48,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Display label on action bar
         NavigationUI.setupActionBarWithNavController(this, navController);
+
+        // Display a welcome toast
+        Toast.makeText(this, WELCOME_MSG, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -60,4 +65,5 @@ public class MainActivity extends AppCompatActivity {
 // * Private attributes
 //**********************************************************************************************************************
     private NavController navController;
+    private final CharSequence WELCOME_MSG = "Welcome to Tinnews";
 }

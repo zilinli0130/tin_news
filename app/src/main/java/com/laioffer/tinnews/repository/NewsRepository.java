@@ -20,7 +20,9 @@ import com.laioffer.tinnews.network.NewsApi;
 import com.laioffer.tinnews.network.RetrofitClient;
 
 // Framework includes
+import android.content.Context;
 import android.os.AsyncTask;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -96,9 +98,20 @@ public class NewsRepository {
         return everyThingLiveData;
     }
 
-    public LiveData<Boolean> favoriteArticle(Article article) {
+    public LiveData<Boolean> favoriteArticle(Article article, Context context) {
+
+        // doInBackground() and onPostExecute()
         MutableLiveData<Boolean> resultLiveData = new MutableLiveData<>();
         new FavoriteAsyncTask(database, resultLiveData).execute(article);
+//        Toast.makeText(context, FAV_SUCCESS_MSG, Toast.LENGTH_SHORT).show();
+
+//        TinnewsDatabaseAsyncTask<Article, Void, Boolean> tinnewsDatabaseAsyncTask = new TinnewsDatabaseAsyncTask<Article, Void, Boolean>() {
+//            @Override
+//            protected Boolean doInBackground(Article article) {
+//                return null;
+//            }
+//        };
+//        tinnewsDatabaseAsyncTask.saveFavoriteArticle(database,resultLiveData,article);
         return resultLiveData;
     }
 
@@ -107,8 +120,9 @@ public class NewsRepository {
     }
 
     public void deleteSavedArticle(Article article) {
-        // Runnable
-        AsyncTask.execute(() -> database.articleDao().deleteArticle(article));
+
+        // Only doInBackground(), no onPostExecute()
+        AsyncTask.execute(() -> database.articleDao().deleteArticle(article)); // Runnable
     }
 
 //**********************************************************************************************************************
@@ -153,6 +167,9 @@ public class NewsRepository {
     // Singleton instance of Retrofit web service client
     private final NewsApi newsApi;
     private final TinNewsDatabase database;
+    private final CharSequence FAV_SUCCESS_MSG = "Liked Item Saved";
+    private final CharSequence FAV_FAIL_MSG = "Item Already In Saved List Before";
+
 
 }
 

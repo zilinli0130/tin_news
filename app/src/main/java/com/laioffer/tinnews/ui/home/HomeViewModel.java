@@ -12,6 +12,8 @@ package com.laioffer.tinnews.ui.home;
 //**********************************************************************************************************************
 
 // Project includes
+import android.content.Context;
+
 import com.laioffer.tinnews.model.Article;
 import com.laioffer.tinnews.model.NewsResponse;
 import com.laioffer.tinnews.repository.NewsRepository;
@@ -47,8 +49,8 @@ public class HomeViewModel extends ViewModel {
         return Transformations.switchMap(countryInput, repository::getTopHeadlines);
     }
 
-    public void setFavoriteArticleInput(Article article) {
-        repository.favoriteArticle(article);
+    public void setFavoriteArticleInput(Article article, Context context) {
+        repository.favoriteArticle(article, context);
     }
 
 
