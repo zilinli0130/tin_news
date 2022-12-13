@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.laioffer.tinnews'
+    namespace 'com.tzllzt.tinnews'
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.laioffer.tinnews"
+        applicationId "com.tzllzt.tinnews"
         minSdk 21
         targetSdk 32
         versionCode 1

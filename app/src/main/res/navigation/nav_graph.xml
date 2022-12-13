@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.laioffer.tinnews.ui.home.HomeFragment"
+        android:name="com.tzllzt.tinnews.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/navigation_save"
-        android:name="com.laioffer.tinnews.ui.save.SaveFragment"
+        android:name="com.tzllzt.tinnews.ui.save.SaveFragment"
         android:label="@string/title_save"
         tools:layout="@layout/fragment_save" >
         <action
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_search"
-        android:name="com.laioffer.tinnews.ui.search.SearchFragment"
+        android:name="com.tzllzt.tinnews.ui.search.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search" >
         <action
@@ -30,12 +30,12 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_details"
-        android:name="com.laioffer.tinnews.ui.details.DetailsFragment"
+        android:name="com.tzllzt.tinnews.ui.details.DetailsFragment"
         android:label="@string/title_details"
         tools:layout="@layout/fragment_details">
         <argument
             android:name="article"
-            app:argType="com.laioffer.tinnews.model.Article" />
+            app:argType="com.tzllzt.tinnews.model.Article" />
     </fragment>
 
 </navigation>
