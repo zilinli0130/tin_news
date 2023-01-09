@@ -1,4 +1,4 @@
-# tinnews
+#  Portable Tinder-Style News Browsing Android Application
 
 ### *Introduction*
 
